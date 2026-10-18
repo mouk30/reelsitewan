@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-navy: #101B2A;
+    --color-ivory: #F7F5F0;
+    --color-gold: #C5A46D;
+    --color-charcoal: #161A20;
+    --color-muted: #737780;
+    --color-border: #E2DFD9;
+    --color-white: #FFFFFF;
+
+    --font-serif: 'Cormorant Garamond', 'Noto Serif KR', Georgia, serif;
+    --font-sans: 'Pretendard Variable', Pretendard, 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-ivory);
+    color: var(--color-charcoal);
+    letter-spacing: -0.015em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+}
+
+/* Luxury Editorial Styling */
+.editorial-lead {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+  line-height: 1.2;
+}
+
+.editorial-dropcap::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 3.75rem;
+  line-height: 0.85;
+  padding-top: 4px;
+  padding-right: 12px;
+  padding-bottom: 2px;
+  color: #101B2A;
+  font-weight: 600;
+}
+
+/* Hairline dividers */
+.border-hairline {
+  border-color: #E2DFD9;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid #C5A46D;
+  outline-offset: 2px;
+}

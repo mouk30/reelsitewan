@@ -1,0 +1,6 @@
+{
+  "name": "릴게임 SAFE TEAM | 릴게임 안전지대",
+  "description": "릴게임 SAFE TEAM 안전지대. 바다이야기, 야마토, 손오공, 오션파라다이스, 황금성 등 릴게임의 역사와 특징, 관련 정보를 살펴보는 릴게임 정보 아카이브.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
