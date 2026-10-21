@@ -1,3 +1,5 @@
+import { NOSTALGIA_DATA_URI, SEAL_DATA_URI } from './fallbackImages';
+
 export interface GameDossier {
   id: string;
   slug: string;
@@ -91,10 +93,12 @@ export const ARCHIVE_IMAGES = {
   oceanParadiseFallback: '/images/oceanparadise.jpg?v=20261018_match',
   goldenCastle: '/images/goldencastle.webp?v=20261018_match',
   goldenCastleFallback: '/images/goldencastle.jpg?v=20261018_match',
-  davinci: '/src/assets/images/davinci_firebird_1792307125361.jpg',
+  davinci: '/images/davinci.webp?v=20261018_phoenix',
   davinciFallback: '/images/davinci.jpg?v=20261018_phoenix',
-  nostalgia: '/src/assets/images/arcade_nostalgia_1990_1792238759279.jpg',
-  seal: '/src/assets/images/safety_regulation_seal_1792238758932.jpg',
+  nostalgia: NOSTALGIA_DATA_URI,
+  nostalgiaFallback: '/images/nostalgia.jpg',
+  seal: SEAL_DATA_URI,
+  sealFallback: '/images/seal.jpg',
 };
 
 export const CORE_GAMES: GameDossier[] = [

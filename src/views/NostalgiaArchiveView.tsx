@@ -57,6 +57,12 @@ export const NostalgiaArchiveView: React.FC<NostalgiaArchiveViewProps> = ({ onNa
               className="w-full h-full object-cover"
               loading="lazy"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (target.src !== ARCHIVE_IMAGES.bada) {
+                  target.src = ARCHIVE_IMAGES.bada;
+                }
+              }}
             />
           </div>
         </div>

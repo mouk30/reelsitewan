@@ -463,6 +463,12 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
                 className="w-full h-64 object-cover"
                 loading="lazy"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (target.src !== ARCHIVE_IMAGES.bada) {
+                    target.src = ARCHIVE_IMAGES.bada;
+                  }
+                }}
               />
             </div>
           </div>

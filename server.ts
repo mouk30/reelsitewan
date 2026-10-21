@@ -38,7 +38,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const APP_URL = process.env.APP_URL || `http://localhost:${PORT}`;
+const APP_URL = process.env.APP_URL || 'https://alliancegem.co.kr';
 
 // 1. Legacy 301 Redirect Middleware (as specified in Section 02 & 09)
 app.use((req, res, next) => {
@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 // 2. Google Robots.txt Route
 app.get('/robots.txt', (_req: Request, res: Response) => {
   const robotsTxt = `# SAFE TEAM — 릴게임 안전지대 Googlebot Robots Policy
-# https://safeteam.archive.org/
+# https://alliancegem.co.kr/
 User-agent: Googlebot
 Allow: /
 Disallow: /api/

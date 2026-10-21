@@ -4,7 +4,7 @@ export function getBaseDomain(): string {
   if (typeof window !== 'undefined' && window.location.origin) {
     return window.location.origin;
   }
-  return 'https://safeteam.archive.org';
+  return 'https://alliancegem.co.kr';
 }
 
 export function generateOrganizationSchema(domain: string = getBaseDomain()) {

@@ -34,6 +34,12 @@ export const SafetyGuideView: React.FC<SafetyGuideViewProps> = ({ onNavigate }) 
             alt="SAFE TEAM 검증 인장"
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (target.src !== ARCHIVE_IMAGES.bada) {
+                target.src = ARCHIVE_IMAGES.bada;
+              }
+            }}
           />
         </div>
         <div className="space-y-2 text-center sm:text-left">
