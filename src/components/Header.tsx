@@ -33,15 +33,23 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
           <div className="flex items-center shrink-0">
             <button
               onClick={() => handleLinkClick('/')}
-              className="group flex flex-col text-left focus:outline-none"
+              className="group flex items-center gap-3 text-left focus:outline-none"
               aria-label="SAFE TEAM 홈으로 이동"
             >
-              <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#101B2A] transition-colors group-hover:text-[#C5A46D]">
-                SAFE TEAM
-              </span>
-              <span className="text-[11px] font-sans tracking-widest text-[#737780] uppercase -mt-0.5">
-                릴게임 안전지대 · 디지털 아카이브
-              </span>
+              <img
+                src="/favicon-32x32.png"
+                alt="대왕황금고래 엠블럼"
+                className="w-9 h-9 rounded-lg shadow-sm border border-[#C5A46D]/30 object-cover shrink-0"
+                referrerPolicy="no-referrer"
+              />
+              <div className="flex flex-col">
+                <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#101B2A] transition-colors group-hover:text-[#C5A46D]">
+                  SAFE TEAM
+                </span>
+                <span className="text-[11px] font-sans tracking-widest text-[#737780] uppercase -mt-0.5">
+                  릴게임 안전지대 · 디지털 아카이브
+                </span>
+              </div>
             </button>
           </div>
 

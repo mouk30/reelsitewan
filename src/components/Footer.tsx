@@ -39,13 +39,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-stone-800">
           {/* Column 1: Brand & Mission */}
           <div>
-            <div className="mb-4">
-              <span className="font-serif text-2xl font-bold tracking-tight text-white block">
-                SAFE TEAM
-              </span>
-              <span className="text-xs text-[#C5A46D] tracking-widest uppercase font-sans">
-                릴게임 안전지대 아카이브
-              </span>
+            <div className="mb-4 flex items-center gap-3">
+              <img
+                src="/favicon-32x32.png"
+                alt="대왕황금고래 엠블럼"
+                className="w-10 h-10 rounded-lg shadow-sm border border-[#C5A46D]/40 object-cover shrink-0"
+                referrerPolicy="no-referrer"
+              />
+              <div>
+                <span className="font-serif text-2xl font-bold tracking-tight text-white block">
+                  SAFE TEAM
+                </span>
+                <span className="text-xs text-[#C5A46D] tracking-widest uppercase font-sans">
+                  릴게임 안전지대 아카이브
+                </span>
+              </div>
             </div>
             <p className="text-xs text-stone-400 leading-relaxed mb-4">
               디지털 저널리즘과 아카이브 공학을 결합하여 한국 아케이드 게임사(史)의 격동기적 기록을 보존하고, 현대 온라인 사설 사기 피해로부터 이용자를 보호합니다.
