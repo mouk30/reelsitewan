@@ -24,7 +24,14 @@ const EDITORIAL_ARTICLES_META = [
 ];
 
 const LEGACY_REDIRECT_MAP = [
+  { legacyUrl: '/pgi', canonicalSlug: '/', statusCode: 301 },
+  { legacyUrl: '/pgi/', canonicalSlug: '/', statusCode: 301 },
+  { legacyUrl: '/pgi.html', canonicalSlug: '/', statusCode: 301 },
+  { legacyUrl: '/pgi.php', canonicalSlug: '/', statusCode: 301 },
   { legacyUrl: '/intro', canonicalSlug: '/about', statusCode: 301 },
+  { legacyUrl: '/intro.html', canonicalSlug: '/about', statusCode: 301 },
+  { legacyUrl: '/index.php', canonicalSlug: '/', statusCode: 301 },
+  { legacyUrl: '/main.html', canonicalSlug: '/', statusCode: 301 },
   { legacyUrl: '/bbs/board.php?bo_table=game', canonicalSlug: '/encyclopedia', statusCode: 301 },
   { legacyUrl: '/board/free', canonicalSlug: '/journal', statusCode: 301 },
   { legacyUrl: '/history', canonicalSlug: '/archive', statusCode: 301 },
@@ -42,8 +49,14 @@ const APP_URL = process.env.APP_URL || 'https://alliancegem.co.kr';
 
 // 1. Legacy 301 Redirect Middleware (as specified in Section 02 & 09)
 app.use((req, res, next) => {
+  const reqPath = req.path.toLowerCase();
+  // Immediate 301 redirect for /pgi and its sub-routes
+  if (reqPath === '/pgi' || reqPath.startsWith('/pgi/') || reqPath.startsWith('/pgi.')) {
+    return res.redirect(301, '/');
+  }
+
   const matchingRule = LEGACY_REDIRECT_MAP.find(
-    (rule) => rule.legacyUrl.toLowerCase() === req.path.toLowerCase()
+    (rule) => rule.legacyUrl.toLowerCase() === reqPath
   );
   if (matchingRule) {
     return res.redirect(matchingRule.statusCode, matchingRule.canonicalSlug);

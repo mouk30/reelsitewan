@@ -512,6 +512,13 @@ export const HISTORICAL_TIMELINE = [
 ];
 
 export const LEGACY_REDIRECT_MAP: LegacyRedirectRule[] = [
+  { legacyUrl: '/pgi', canonicalSlug: '/', statusCode: 301, reason: '구 알리앙스젬 PGI 유입 경로의 메인 아카이브 301 리다이렉트 (404 오류 방지)' },
+  { legacyUrl: '/pgi/', canonicalSlug: '/', statusCode: 301, reason: '구 PGI 디렉토리 경로의 메인 아카이브 301 영구 이전' },
+  { legacyUrl: '/pgi.html', canonicalSlug: '/', statusCode: 301, reason: '구 pgi 정적 페이지의 메인 아카이브 301 리다이렉트' },
+  { legacyUrl: '/pgi.php', canonicalSlug: '/', statusCode: 301, reason: '구 pgi 동적 스크립트 경로 301 영구 이전' },
+  { legacyUrl: '/intro', canonicalSlug: '/about', statusCode: 301, reason: '구 인트로 소개 페이지 이전' },
+  { legacyUrl: '/intro.html', canonicalSlug: '/about', statusCode: 301, reason: '구 정적 소개 페이지 이전' },
+  { legacyUrl: '/index.php', canonicalSlug: '/', statusCode: 301, reason: '구 인덱스 PHP의 루트 정규화 이전' },
   { legacyUrl: '/bada.html', canonicalSlug: '/games/bada-story', statusCode: 301, reason: '기존 바다이야기 정적 페이지의 캐노니컬 아카이브 이전' },
   { legacyUrl: '/yamato/', canonicalSlug: '/games/yamato', statusCode: 301, reason: '구 야마토 디렉토리 URL의 표준 엔터티 슬러그 매핑' },
   { legacyUrl: '/sonogong.php', canonicalSlug: '/games/sonogong', statusCode: 301, reason: '구 손오공 정보 페이지의 영구 리다이렉트' },

@@ -22,10 +22,41 @@ import { updatePageMeta } from './lib/seo/headManager';
 import { buildPageGraph } from './lib/seo/schemaFactory';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 
+// Helper to resolve incoming legacy URLs or aliases (e.g. /pgi from former domain index)
+function resolvePath(rawPath: string): string {
+  if (!rawPath) return '/';
+  const path = rawPath.trim();
+  const cleanPath = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
+  const lowerPath = cleanPath.toLowerCase();
+
+  // Redirect /pgi, /pgi/*, /pgi.html directly to root
+  if (lowerPath === '/pgi' || lowerPath.startsWith('/pgi/') || lowerPath.startsWith('/pgi.')) {
+    return '/';
+  }
+
+  // Match legacy 301 redirect map
+  const redirectRule = LEGACY_REDIRECT_MAP.find(
+    (r) =>
+      r.legacyUrl.toLowerCase() === path.toLowerCase() ||
+      r.legacyUrl.toLowerCase() === lowerPath
+  );
+  if (redirectRule) {
+    return redirectRule.canonicalSlug;
+  }
+
+  return path;
+}
+
 export default function App() {
   const [currentPath, setCurrentPath] = useState<string>(() => {
     if (typeof window !== 'undefined') {
-      return window.location.pathname || '/';
+      const initialPath = window.location.pathname || '/';
+      const resolved = resolvePath(initialPath);
+      // If legacy path or /pgi, quietly normalize browser URL without full reload
+      if (resolved !== initialPath) {
+        window.history.replaceState({}, '', resolved);
+      }
+      return resolved;
     }
     return '/';
   });
@@ -34,11 +65,7 @@ export default function App() {
 
   // Synchronize path and SEO metadata
   const navigateTo = (path: string, pushHistory = true) => {
-    // Check if path matches a legacy 301 redirect rule
-    const redirectRule = LEGACY_REDIRECT_MAP.find(
-      (r) => r.legacyUrl.toLowerCase() === path.toLowerCase()
-    );
-    const targetPath = redirectRule ? redirectRule.canonicalSlug : path;
+    const targetPath = resolvePath(path);
 
     setCurrentPath(targetPath);
     if (pushHistory && typeof window !== 'undefined') {
@@ -50,7 +77,8 @@ export default function App() {
   // Browser popstate listener (Back / Forward buttons)
   useEffect(() => {
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname || '/');
+      const resolved = resolvePath(window.location.pathname || '/');
+      setCurrentPath(resolved);
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -179,36 +207,38 @@ export default function App() {
 
   // Route Renderer
   const renderCurrentView = () => {
-    if (currentPath === '/') {
+    const normalized = resolvePath(currentPath);
+
+    if (normalized === '/' || normalized.toLowerCase().startsWith('/pgi')) {
       return <HomeView onNavigate={navigateTo} />;
     }
-    if (currentPath === '/encyclopedia') {
+    if (normalized === '/encyclopedia') {
       return <EncyclopediaHubView onNavigate={navigateTo} />;
     }
-    if (currentPath.startsWith('/games/')) {
-      const slug = currentPath.replace('/games/', '');
+    if (normalized.startsWith('/games/')) {
+      const slug = normalized.replace('/games/', '');
       return <GameDetailView slug={slug} onNavigate={navigateTo} />;
     }
-    if (currentPath === '/comparator') {
+    if (normalized === '/comparator') {
       return <ComparatorView onNavigate={navigateTo} />;
     }
-    if (currentPath === '/archive') {
+    if (normalized === '/archive') {
       return <NostalgiaArchiveView onNavigate={navigateTo} />;
     }
-    if (currentPath === '/guide') {
+    if (normalized === '/guide') {
       return <SafetyGuideView onNavigate={navigateTo} />;
     }
-    if (currentPath === '/journal') {
+    if (normalized === '/journal') {
       return <JournalView onNavigate={navigateTo} />;
     }
-    if (currentPath.startsWith('/journal/')) {
-      const slug = currentPath.replace('/journal/', '');
+    if (normalized.startsWith('/journal/')) {
+      const slug = normalized.replace('/journal/', '');
       return <ArticleDetailView slug={slug} onNavigate={navigateTo} />;
     }
-    if (currentPath === '/about') {
+    if (normalized === '/about') {
       return <AboutView onNavigate={navigateTo} />;
     }
-    if (currentPath === '/audit') {
+    if (normalized === '/audit') {
       return <RedirectAuditView onNavigate={navigateTo} />;
     }
 

@@ -2,6 +2,18 @@
   "framework": "vite",
   "buildCommand": "vite build",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/pgi",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pgi/:path*",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
