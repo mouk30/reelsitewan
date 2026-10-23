@@ -12,113 +12,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
 
   return (
     <div className="space-y-20 sm:space-y-28 pb-20">
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-6 sm:pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Hero Left: Editorial Copy */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-[#C5A46D] uppercase">
-              <span>THE SAFE TEAM ARCHIVE</span>
-              <span aria-hidden="true" className="text-stone-300">·</span>
-              <span>VOL. 2026</span>
-            </div>
-
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#101B2A] font-bold leading-[1.15] tracking-tight">
-              그 시절의 추억, <br />
-              <span className="italic font-normal">릴게임의 모든 이야기</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-[#737780] leading-relaxed max-w-xl">
-              바다이야기부터 야마토, 손오공까지. 한 시대를 지나온 릴게임의 역사와 문화,
-              그리고 기억 속 사실과 제도적 교훈을 엄밀한 사료와 함께 기록합니다.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <button
-                onClick={() => onNavigate('/encyclopedia')}
-                className="px-6 py-3.5 bg-[#101B2A] text-white rounded text-sm font-medium hover:bg-[#162335] transition-colors shadow-sm flex items-center gap-2 min-h-[44px]"
-              >
-                <span>릴게임 백과 살펴보기</span>
-                <ArrowRight className="w-4 h-4 text-[#C5A46D]" />
-              </button>
-
-              <button
-                onClick={() => onNavigate('/guide')}
-                className="px-5 py-3.5 bg-white border border-[#E2DFD9] text-[#101B2A] rounded text-sm font-medium hover:border-[#C5A46D] hover:bg-[#FBF9F5] transition-colors min-h-[44px]"
-              >
-                소비자 안전 가이드
-              </button>
-            </div>
-
-            <div className="pt-4 flex items-center gap-6 text-xs text-[#737780] border-t border-[#E2DFD9]/80">
-              <div>
-                <span className="font-semibold text-[#101B2A] font-mono">{CORE_GAMES.length}대</span> 대표 기종 분석
-              </div>
-              <span aria-hidden="true" className="text-stone-300">·</span>
-              <div>
-                <span className="font-semibold text-[#101B2A] font-mono">2006</span> 법제 변천사 수록
-              </div>
-              <span aria-hidden="true" className="text-stone-300">·</span>
-              <div>
-                <span className="font-semibold text-[#101B2A]">100%</span> 비영리 공공 아카이브
-              </div>
-            </div>
-          </div>
-
-          {/* Hero Right: High-Resolution Archival Image Frame */}
-          <div className="lg:col-span-5">
-            <div className="relative rounded-lg overflow-hidden border border-[#E2DFD9] bg-stone-900 shadow-xl group">
-              <img
-                src={ARCHIVE_IMAGES.bada}
-                alt="바다이야기 공식 포스터 - 황금고래와 잠수함 연출"
-                className="w-full h-[360px] sm:h-[440px] object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="eager"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  if (ARCHIVE_IMAGES.badaFallback && target.src !== ARCHIVE_IMAGES.badaFallback) {
-                    target.src = ARCHIVE_IMAGES.badaFallback;
-                  }
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                <span className="text-[10px] tracking-widest uppercase text-[#C5A46D] block font-sans font-semibold">
-                  REEL GAME ARCHIVE · 6대 대표 기종
-                </span>
-                <p className="font-serif text-lg font-bold leading-snug mt-1 text-amber-300">
-                  바다이야기 · 야마토 · 손오공 · 오션파라다이스 · 황금성 · 다빈치
-                </p>
-                <p className="text-xs text-stone-300 mt-1">
-                  공식 포스터 및 기종별 공학 스펙 아카이브 수록
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. DIRECT ANSWER (GEO / AEO DEFINITION BLOCK) */}
-      <section className="bg-white rounded-xl p-8 sm:p-10 border border-[#E2DFD9] shadow-2xs">
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-semibold text-[#C5A46D] tracking-wider uppercase mb-2">
-            <HelpCircle className="w-4 h-4" />
-            <span>DIRECT ANSWER · 핵심 개념 요약</span>
-          </div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#101B2A] mb-4">
-            릴게임이란 무엇인가?
-          </h2>
-          <p className="text-base text-[#161A20] leading-relaxed mb-4">
-            <strong>릴게임(Reel Game)</strong>이란 원통형 회전체(릴) 또는 비디오 스크린 상에 구현된 가상의 릴이 회전하다 정지할 때, 동일한 심볼이 특정 규칙(페이라인)으로 정렬되면 점수나 경품을 획득하는 형태의 아케이드 게임을 의미합니다.
-          </p>
-          <p className="text-sm text-[#737780] leading-relaxed">
-            1990년대 후반 기계식 드럼 릴머신으로 시작하여 2004~2006년 ‘바다이야기’, ‘야마토’ 등 화려한 애니메이션 연출을 탑재한 비디오 스크린 릴게임으로 진화하였습니다. 그러나 지정 문화상품권 환전소와 결합된 불법 사행성 문제로 인해 2006년 정부의 대대적인 법 개정을 통해 오프라인 영업이 전면 금지되었습니다.
-          </p>
-        </div>
-      </section>
-
-      {/* 3. 6-GAME ENCYCLOPEDIA SHOWCASE (릴게임 대표 기종 백과 - 6대 대표 기종) */}
-      <section className="space-y-8">
+      {/* 1. 6-GAME ENCYCLOPEDIA SHOWCASE (릴게임 대표 기종 백과 - 6대 대표 기종) */}
+      <section className="pt-4 sm:pt-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E2DFD9] pb-4">
           <div>
             <span className="text-xs font-semibold text-[#C5A46D] tracking-widest uppercase">
@@ -277,6 +172,111 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* 2. HERO SECTION */}
+      <section className="relative pt-2 sm:pt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Hero Left: Editorial Copy */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-[#C5A46D] uppercase">
+              <span>THE SAFE TEAM ARCHIVE</span>
+              <span aria-hidden="true" className="text-stone-300">·</span>
+              <span>VOL. 2026</span>
+            </div>
+
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#101B2A] font-bold leading-[1.15] tracking-tight">
+              그 시절의 추억, <br />
+              <span className="italic font-normal">릴게임의 모든 이야기</span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-[#737780] leading-relaxed max-w-xl">
+              바다이야기부터 야마토, 손오공까지. 한 시대를 지나온 릴게임의 역사와 문화,
+              그리고 기억 속 사실과 제도적 교훈을 엄밀한 사료와 함께 기록합니다.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <button
+                onClick={() => onNavigate('/encyclopedia')}
+                className="px-6 py-3.5 bg-[#101B2A] text-white rounded text-sm font-medium hover:bg-[#162335] transition-colors shadow-sm flex items-center gap-2 min-h-[44px]"
+              >
+                <span>릴게임 백과 살펴보기</span>
+                <ArrowRight className="w-4 h-4 text-[#C5A46D]" />
+              </button>
+
+              <button
+                onClick={() => onNavigate('/guide')}
+                className="px-5 py-3.5 bg-white border border-[#E2DFD9] text-[#101B2A] rounded text-sm font-medium hover:border-[#C5A46D] hover:bg-[#FBF9F5] transition-colors min-h-[44px]"
+              >
+                소비자 안전 가이드
+              </button>
+            </div>
+
+            <div className="pt-4 flex items-center gap-6 text-xs text-[#737780] border-t border-[#E2DFD9]/80">
+              <div>
+                <span className="font-semibold text-[#101B2A] font-mono">{CORE_GAMES.length}대</span> 대표 기종 분석
+              </div>
+              <span aria-hidden="true" className="text-stone-300">·</span>
+              <div>
+                <span className="font-semibold text-[#101B2A] font-mono">2006</span> 법제 변천사 수록
+              </div>
+              <span aria-hidden="true" className="text-stone-300">·</span>
+              <div>
+                <span className="font-semibold text-[#101B2A]">100%</span> 비영리 공공 아카이브
+              </div>
+            </div>
+          </div>
+
+          {/* Hero Right: High-Resolution Archival Image Frame */}
+          <div className="lg:col-span-5">
+            <div className="relative rounded-lg overflow-hidden border border-[#E2DFD9] bg-stone-900 shadow-xl group">
+              <img
+                src={ARCHIVE_IMAGES.bada}
+                alt="바다이야기 공식 포스터 - 황금고래와 잠수함 연출"
+                className="w-full h-[360px] sm:h-[440px] object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="eager"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (ARCHIVE_IMAGES.badaFallback && target.src !== ARCHIVE_IMAGES.badaFallback) {
+                    target.src = ARCHIVE_IMAGES.badaFallback;
+                  }
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+                <span className="text-[10px] tracking-widest uppercase text-[#C5A46D] block font-sans font-semibold">
+                  REEL GAME ARCHIVE · 6대 대표 기종
+                </span>
+                <p className="font-serif text-lg font-bold leading-snug mt-1 text-amber-300">
+                  바다이야기 · 야마토 · 손오공 · 오션파라다이스 · 황금성 · 다빈치
+                </p>
+                <p className="text-xs text-stone-300 mt-1">
+                  공식 포스터 및 기종별 공학 스펙 아카이브 수록
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. DIRECT ANSWER (GEO / AEO DEFINITION BLOCK) */}
+      <section className="bg-white rounded-xl p-8 sm:p-10 border border-[#E2DFD9] shadow-2xs">
+        <div className="max-w-3xl">
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#C5A46D] tracking-wider uppercase mb-2">
+            <HelpCircle className="w-4 h-4" />
+            <span>DIRECT ANSWER · 핵심 개념 요약</span>
+          </div>
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#101B2A] mb-4">
+            릴게임이란 무엇인가?
+          </h2>
+          <p className="text-base text-[#161A20] leading-relaxed mb-4">
+            <strong>릴게임(Reel Game)</strong>이란 원통형 회전체(릴) 또는 비디오 스크린 상에 구현된 가상의 릴이 회전하다 정지할 때, 동일한 심볼이 특정 규칙(페이라인)으로 정렬되면 점수나 경품을 획득하는 형태의 아케이드 게임을 의미합니다.
+          </p>
+          <p className="text-sm text-[#737780] leading-relaxed">
+            1990년대 후반 기계식 드럼 릴머신으로 시작하여 2004~2006년 ‘바다이야기’, ‘야마토’ 등 화려한 애니메이션 연출을 탑재한 비디오 스크린 릴게임으로 진화하였습니다. 그러나 지정 문화상품권 환전소와 결합된 불법 사행성 문제로 인해 2006년 정부의 대대적인 법 개정을 통해 오프라인 영업이 전면 금지되었습니다.
+          </p>
         </div>
       </section>
 
