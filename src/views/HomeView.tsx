@@ -42,13 +42,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               className="bg-[#0c141f] text-white rounded-2xl border border-stone-800 hover:border-[#C5A46D] transition-all duration-300 shadow-xl overflow-hidden flex flex-col justify-between group"
             >
               <div>
-                {/* Top Poster Image Matching Each Game (Click links to reelkings.kr) */}
+                {/* Top Poster Image Matching Each Game */}
                 <a
-                  href="https://reelkings.kr"
+                  href={game.externalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block relative aspect-square overflow-hidden bg-stone-950 cursor-pointer group/img"
-                  title={`${game.koreanName} - reelkings.kr 바로가기`}
+                  title={`${game.koreanName} - 사이트 바로가기`}
                 >
                   <img
                     src={game.posterImage}
@@ -83,7 +83,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
                   {/* Hover action overlay indicator */}
                   <div className="absolute inset-0 bg-black/25 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                     <span className="bg-gradient-to-r from-amber-500 to-orange-500 text-stone-950 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                      <span>▶ reelkings.kr 바로가기</span>
+                      <span>▶ 사이트 바로가기</span>
                     </span>
                   </div>
                 </a>
@@ -153,7 +153,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               {/* Action Buttons */}
               <div className="p-5 sm:p-6 pt-0 grid grid-cols-2 gap-3">
                 <a
-                  href="https://reelkings.kr"
+                  href={game.externalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3 px-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-[#0c141f] font-bold text-xs sm:text-sm rounded-lg transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer text-center no-underline hover:brightness-105 active:scale-[0.98]"

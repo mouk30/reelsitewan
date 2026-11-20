@@ -28,11 +28,11 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ slug, onNavigate
       <div className="bg-[#0c141f] text-white rounded-2xl border border-stone-800 p-6 sm:p-8 shadow-xl">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           <a
-            href="https://reelkings.kr"
+            href={game.externalUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="md:col-span-5 relative aspect-square rounded-xl overflow-hidden border border-stone-700 hover:border-amber-500 bg-stone-950 block cursor-pointer group/detailImg transition-colors"
-            title={`${game.koreanName} - reelkings.kr 바로가기`}
+            title={`${game.koreanName} - 사이트 바로가기`}
           >
             <img
               src={game.posterImage}
@@ -58,7 +58,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ slug, onNavigate
 
             <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/detailImg:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
               <span className="bg-gradient-to-r from-amber-500 to-orange-500 text-stone-950 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                <span>▶ reelkings.kr 바로가기</span>
+                <span>▶ 사이트 바로가기</span>
               </span>
             </div>
           </a>
@@ -97,7 +97,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ slug, onNavigate
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <a
-                href="https://reelkings.kr"
+                href={game.externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="py-3 px-6 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-[#0c141f] font-bold text-xs sm:text-sm rounded-lg transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer no-underline hover:brightness-105 active:scale-[0.98]"
