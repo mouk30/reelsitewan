@@ -20,13 +20,18 @@ import { RedirectAuditView } from './views/RedirectAuditView';
 import { CORE_GAMES, EDITORIAL_ARTICLES, LEGACY_REDIRECT_MAP } from './data/archiveData';
 import { updatePageMeta } from './lib/seo/headManager';
 import { buildPageGraph } from './lib/seo/schemaFactory';
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import {
+  DEFAULT_OG_IMAGE_PATH,
+  HOME_META_DESCRIPTION,
+  HOME_META_TITLE,
+} from './lib/seo/seoConfig';
+import { ArrowLeft } from 'lucide-react';
 
-// Helper to resolve incoming legacy URLs or aliases (e.g. /pgi from former domain index)
+// Helper to resolve incoming legacy URLs, trailing slashes, or aliases
 function resolvePath(rawPath: string): string {
   if (!rawPath) return '/';
   const path = rawPath.trim();
-  const cleanPath = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
+  const cleanPath = path.length > 1 ? path.replace(/\/+$/, '') : '/';
   const lowerPath = cleanPath.toLowerCase();
 
   // Redirect /pgi, /pgi/*, /pgi.html directly to root
@@ -44,7 +49,7 @@ function resolvePath(rawPath: string): string {
     return redirectRule.canonicalSlug;
   }
 
-  return path;
+  return cleanPath || '/';
 }
 
 export default function App() {
@@ -52,7 +57,6 @@ export default function App() {
     if (typeof window !== 'undefined') {
       const initialPath = window.location.pathname || '/';
       const resolved = resolvePath(initialPath);
-      // If legacy path or /pgi, quietly normalize browser URL without full reload
       if (resolved !== initialPath) {
         window.history.replaceState({}, '', resolved);
       }
@@ -84,36 +88,55 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // Update Page Title, Meta, Canonical, and Schema.org JSON-LD dynamically
+  // Update Page Title, Meta, Canonical, OpenGraph, and Schema.org JSON-LD dynamically
   useEffect(() => {
-    if (currentPath === '/') {
+    const normalized = resolvePath(currentPath);
+
+    if (normalized === '/') {
       updatePageMeta({
-        title: '릴게임 SAFE TEAM | 릴게임 안전지대',
-        description:
-          '릴게임 SAFE TEAM 안전지대. 바다이야기, 야마토, 손오공, 오션파라다이스, 황금성 등 릴게임의 역사와 특징, 관련 정보를 살펴보는 릴게임 정보 아카이브.',
+        title: HOME_META_TITLE,
+        description: HOME_META_DESCRIPTION,
         canonicalPath: '/',
+        ogImage: DEFAULT_OG_IMAGE_PATH,
+        ogImageAlt: '릴게임 안전지대 SAFE TEAM 대표 아카이브 이미지',
         jsonLdSchema: buildPageGraph('home'),
       });
-    } else if (currentPath === '/encyclopedia') {
+      return;
+    }
+
+    if (normalized === '/encyclopedia') {
+      const desc =
+        '바다이야기, 야마토, 손오공, 오션파라다이스, 황금성, 다빈치 등 한국 아케이드 릴게임 6대 기종의 하드웨어 제원, 구동 방식, 역사적 배경과 규제 내력을 한곳에서 살펴보세요.';
       updatePageMeta({
-        title: '릴게임 대표 기종 백과 | SAFE TEAM 안전지대',
-        description:
-          '바다이야기, 야마토, 손오공, 오션파라다이스, 황금성 등 대한민국 아케이드 릴게임 대표 기종의 제원, 역사, 구동 방식 백과사전.',
+        title: '6대 대표 릴게임 기종 백과 | SAFE TEAM',
+        description: desc,
         canonicalPath: '/encyclopedia',
+        ogImage: DEFAULT_OG_IMAGE_PATH,
         jsonLdSchema: buildPageGraph('collection', {
-          collectionTitle: '릴게임 대표 기종 백과',
-          collectionDesc: '대한민국 아케이드 릴게임 대표 기종의 공식 사료 및 제원 백과',
+          collectionTitle: '6대 대표 릴게임 기종 백과',
+          collectionDesc: desc,
+          collectionPath: '/encyclopedia',
+          collectionItems: CORE_GAMES.map((g) => ({
+            name: g.koreanName,
+            url: `/games/${g.slug}`,
+          })),
           breadcrumbs: [{ name: '릴게임 백과', path: '/encyclopedia' }],
         }),
       });
-    } else if (currentPath.startsWith('/games/')) {
-      const slug = currentPath.replace('/games/', '');
+      return;
+    }
+
+    if (normalized.startsWith('/games/')) {
+      const slug = normalized.replace('/games/', '');
       const game = CORE_GAMES.find((g) => g.slug === slug);
       if (game) {
         updatePageMeta({
-          title: `${game.koreanName} (${game.englishName}) - 기기 구조 및 역사 기록 | SAFE TEAM`,
+          title: `${game.koreanName} (${game.englishName}) 스펙·역사 | SAFE TEAM`,
           description: game.directAnswer,
           canonicalPath: `/games/${game.slug}`,
+          ogType: 'article',
+          ogImage: game.posterImage,
+          ogImageAlt: `${game.koreanName} 대표 아케이드 포스터`,
           jsonLdSchema: buildPageGraph('game', {
             game,
             breadcrumbs: [
@@ -122,57 +145,83 @@ export default function App() {
             ],
           }),
         });
+        return;
       }
-    } else if (currentPath === '/comparator') {
+    }
+
+    if (normalized === '/comparator') {
       updatePageMeta({
-        title: '릴게임 기기 스펙 횡단 비교 매트릭스 | SAFE TEAM',
+        title: '릴게임 6대 기종 스펙 비교 매트릭스 | SAFE TEAM',
         description:
-          '바다이야기, 야마토 등 7대 기종의 하드웨어 스펙, 릴 구동 방식, 페이라인, 당첨 메커니즘을 한눈에 비교하는 공식 매트릭스.',
+          '바다이야기, 야마토, 손오공, 오션파라다이스, 황금성, 다빈치의 릴 구동 메커니즘, 디스플레이, 페이라인, 보너스 구조와 법적 처분 내력을 표로 횡단 비교합니다.',
         canonicalPath: '/comparator',
-        jsonLdSchema: buildPageGraph('guide', {
+        jsonLdSchema: buildPageGraph('comparator', {
           breadcrumbs: [{ name: '기기 비교', path: '/comparator' }],
         }),
       });
-    } else if (currentPath === '/archive') {
+      return;
+    }
+
+    if (normalized === '/archive') {
       updatePageMeta({
         title: '1990~2000년대 오락실 추억 아카이브 | SAFE TEAM',
         description:
-          '동전 한 닢의 낭만이 있던 1990년대 골목 전자오락실부터 2000년대 성인 릴게임장으로의 공간적 전이를 기록한 문화 아카이브.',
+          '1990년대 골목 전자오락실의 동전 게임 문화부터 PC방 보급과 2000년대 성인 릴게임장으로의 공간 전이를 대중문화 사료와 함께 기록합니다.',
         canonicalPath: '/archive',
-        jsonLdSchema: buildPageGraph('guide', {
+        ogImage: '/images/nostalgia.jpg',
+        ogImageAlt: '1990년대 한국 골목 오락실과 CRT 브라운관 모니터들',
+        jsonLdSchema: buildPageGraph('archive', {
           breadcrumbs: [{ name: '추억 아카이브', path: '/archive' }],
         }),
       });
-    } else if (currentPath === '/guide') {
+      return;
+    }
+
+    if (normalized === '/guide') {
       updatePageMeta({
-        title: '릴게임 관련 제도 및 이용자 안전 가이드 | SAFE TEAM 안전지대',
+        title: '릴게임 관련 법령 및 피해 예방 가이드 | SAFE TEAM',
         description:
-          '게임산업진흥에 관한 법률, 불법 온라인 사설 릴게임 3대 사기 수법 및 피해 예방 공식 가이드라인.',
+          '게임산업진흥에 관한 법률 처벌 기준과 온라인 불법 사설 릴게임의 3대 사기 수법(확률 조작·추가 입금·먹튀) 및 공식 신고 기관을 안내합니다.',
         canonicalPath: '/guide',
+        ogImage: '/images/seal.jpg',
+        ogImageAlt: 'SAFE TEAM 검증 인장',
         jsonLdSchema: buildPageGraph('guide', {
           breadcrumbs: [{ name: '안전 가이드', path: '/guide' }],
         }),
       });
-    } else if (currentPath === '/journal') {
+      return;
+    }
+
+    if (normalized === '/journal') {
+      const desc =
+        '한국 전자오락실 공간 사회학, 2006년 바다이야기 사태와 경품용 상품권 제도 해부, 사이버 사기 예방 분석 등 SAFE TEAM 기획 리포트 모음입니다.';
       updatePageMeta({
-        title: 'SAFE TEAM 학술 탐사 매거진 및 기획 리포트',
-        description:
-          '한국 아케이드 산업의 법제사적 분기점, 2006 바다이야기 사태의 심층 해부, 대중문화 비평 리포트 모음.',
+        title: '아케이드 역사·제도 탐사 리포트 | SAFE TEAM 매거진',
+        description: desc,
         canonicalPath: '/journal',
         jsonLdSchema: buildPageGraph('collection', {
-          collectionTitle: 'SAFE TEAM 학술 매거진',
-          collectionDesc: '아케이드 역사 및 제도 분석 심층 저널',
+          collectionTitle: 'SAFE TEAM 학술 탐사 매거진',
+          collectionDesc: desc,
+          collectionPath: '/journal',
+          collectionItems: EDITORIAL_ARTICLES.map((a) => ({
+            name: a.title,
+            url: `/journal/${a.slug}`,
+          })),
           breadcrumbs: [{ name: '매거진', path: '/journal' }],
         }),
       });
-    } else if (currentPath.startsWith('/journal/')) {
-      const slug = currentPath.replace('/journal/', '');
+      return;
+    }
+
+    if (normalized.startsWith('/journal/')) {
+      const slug = normalized.replace('/journal/', '');
       const article = EDITORIAL_ARTICLES.find((a) => a.slug === slug);
       if (article) {
         updatePageMeta({
           title: `${article.title} | SAFE TEAM 매거진`,
           description: article.directAnswer,
           canonicalPath: `/journal/${article.slug}`,
+          ogType: 'article',
           jsonLdSchema: buildPageGraph('article', {
             article,
             breadcrumbs: [
@@ -181,35 +230,51 @@ export default function App() {
             ],
           }),
         });
+        return;
       }
-    } else if (currentPath === '/about') {
+    }
+
+    if (normalized === '/about') {
       updatePageMeta({
-        title: 'SAFE TEAM 소개 및 편집 윤리 정책 | 릴게임 안전지대',
+        title: 'SAFE TEAM 소개 및 편집 윤리 원칙 | 릴게임 안전지대',
         description:
-          'SAFE TEAM의 설립 목적, 사료 검증 기준, 비영리 학술 원칙 및 Google Technical SEO 가이드 준수 선언.',
+          '비영리 학술 아카이브 SAFE TEAM의 설립 목적, 절대적 무사행 원칙, 공공 1차 사료 기반 팩트체크 및 편집 가이드라인을 안내합니다.',
         canonicalPath: '/about',
         jsonLdSchema: buildPageGraph('about', {
           breadcrumbs: [{ name: '소개', path: '/about' }],
         }),
       });
-    } else if (currentPath === '/audit') {
-      updatePageMeta({
-        title: '레거시 URL 301 리다이렉트 & Google 색인 감사 | SAFE TEAM',
-        description:
-          '과거 구형 웹사이트 분석 기반 301 Redirect 매핑 테이블, XML Sitemap, Robots.txt 크롤러 검증 현황.',
-        canonicalPath: '/audit',
-        jsonLdSchema: buildPageGraph('guide', {
-          breadcrumbs: [{ name: 'SEO 감사', path: '/audit' }],
-        }),
-      });
+      return;
     }
+
+    if (normalized === '/audit') {
+      updatePageMeta({
+        title: '레거시 URL 리다이렉트 및 기술 SEO 감사 | SAFE TEAM',
+        description:
+          '구형 레거시 경로의 301 영구 이전 매핑 테이블과 크롤러 색인 상태를 점검하는 SAFE TEAM 내부 기술 검증 페이지입니다.',
+        canonicalPath: '/audit',
+        robots: 'noindex, follow',
+        jsonLdSchema: null,
+      });
+      return;
+    }
+
+    // 404 Not Found SEO Metadata
+    updatePageMeta({
+      title: '페이지를 찾을 수 없습니다 (404) | SAFE TEAM',
+      description:
+        '요청하신 페이지가 존재하지 않거나 이전되었습니다. SAFE TEAM 릴게임 안전지대 아카이브의 공식 메뉴를 이용해 주세요.',
+      canonicalPath: null,
+      robots: 'noindex, nofollow',
+      jsonLdSchema: null,
+    });
   }, [currentPath]);
 
   // Route Renderer
   const renderCurrentView = () => {
     const normalized = resolvePath(currentPath);
 
-    if (normalized === '/' || normalized.toLowerCase().startsWith('/pgi')) {
+    if (normalized === '/') {
       return <HomeView onNavigate={navigateTo} />;
     }
     if (normalized === '/encyclopedia') {
@@ -217,7 +282,10 @@ export default function App() {
     }
     if (normalized.startsWith('/games/')) {
       const slug = normalized.replace('/games/', '');
-      return <GameDetailView slug={slug} onNavigate={navigateTo} />;
+      const game = CORE_GAMES.find((g) => g.slug === slug);
+      if (game) {
+        return <GameDetailView slug={slug} onNavigate={navigateTo} />;
+      }
     }
     if (normalized === '/comparator') {
       return <ComparatorView onNavigate={navigateTo} />;
@@ -233,7 +301,10 @@ export default function App() {
     }
     if (normalized.startsWith('/journal/')) {
       const slug = normalized.replace('/journal/', '');
-      return <ArticleDetailView slug={slug} onNavigate={navigateTo} />;
+      const article = EDITORIAL_ARTICLES.find((a) => a.slug === slug);
+      if (article) {
+        return <ArticleDetailView slug={slug} onNavigate={navigateTo} />;
+      }
     }
     if (normalized === '/about') {
       return <AboutView onNavigate={navigateTo} />;
@@ -255,13 +326,19 @@ export default function App() {
           요청하신 경로는 존재하지 않거나 이전되었습니다. SAFE TEAM 아카이브의 공식 색인된 페이지를 확인해 주십시오.
         </p>
         <div className="pt-2">
-          <button
-            onClick={() => navigateTo('/')}
+          <a
+            href="/"
+            onClick={(e) => {
+              if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                e.preventDefault();
+                navigateTo('/');
+              }
+            }}
             className="px-6 py-3 bg-[#101B2A] text-white rounded text-xs font-semibold hover:bg-[#162335] transition-colors inline-flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4 text-[#C5A46D]" />
             <span>메인 아카이브로 돌아가기</span>
-          </button>
+          </a>
         </div>
       </div>
     );

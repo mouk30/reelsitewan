@@ -1,12 +1,17 @@
-User-agent: Googlebot
-Allow: /
-Disallow: /api/
-
-User-agent: Google-Extended
-Allow: /
-
+# https://alliancegem.co.kr - Google Search & Crawler Policy
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://alliancegem.co.kr/sitemap.xml

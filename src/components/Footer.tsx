@@ -17,22 +17,28 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-white text-sm font-semibold mb-1">
+              <p className="text-white text-sm font-semibold mb-1">
                 SAFE TEAM 공공 정보 및 윤리 정책 (Zero-Gambling Policy)
-              </h4>
+              </p>
               <p className="text-xs text-stone-400 leading-relaxed max-w-3xl">
                 본 아카이브는 1990~2000년대 한국 성인용 릴게임의 역사·문화적 변천과 제도적 폐해를 객관적으로 기록하는 공공 목적의 비영리 학술 자료실입니다.
                 일체의 베팅, 환전, 게임 머니 충전, 불법 사설 도박 사이트의 실행이나 링크를 엄격히 금지하며, 그 어떠한 사행 행위도 보증하지 않습니다.
               </p>
             </div>
           </div>
-          <button
-            onClick={() => onNavigate('/guide')}
+          <a
+            href="/guide"
+            onClick={(e) => {
+              if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                e.preventDefault();
+                onNavigate('/guide');
+              }
+            }}
             className="shrink-0 text-xs text-[#C5A46D] hover:text-white font-medium flex items-center gap-1 transition-colors px-3 py-2 rounded border border-[#C5A46D]/30 hover:border-[#C5A46D]"
           >
             <span>안전 가이드 전문 읽기</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
-          </button>
+          </a>
         </div>
 
         {/* 4-Column Grid Navigation */}
@@ -63,20 +69,26 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Column 2: 7 Core Games */}
+          {/* Column 2: Core Games */}
           <div>
-            <h5 className="text-xs uppercase tracking-widest text-[#C5A46D] font-semibold mb-4">
+            <p className="text-xs uppercase tracking-widest text-[#C5A46D] font-semibold mb-4">
               핵심 대표 기종 백과
-            </h5>
+            </p>
             <ul className="space-y-2 text-xs text-stone-400">
               {CORE_GAMES.map((game) => (
                 <li key={game.slug}>
-                  <button
-                    onClick={() => onNavigate(`/games/${game.slug}`)}
+                  <a
+                    href={`/games/${game.slug}`}
+                    onClick={(e) => {
+                      if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                        e.preventDefault();
+                        onNavigate(`/games/${game.slug}`);
+                      }
+                    }}
                     className="hover:text-white transition-colors text-left"
                   >
                     {game.koreanName} ({game.englishName.split(' ')[0]})
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -84,74 +96,116 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Column 3: Culture & Regulations */}
           <div>
-            <h5 className="text-xs uppercase tracking-widest text-[#C5A46D] font-semibold mb-4">
+            <p className="text-xs uppercase tracking-widest text-[#C5A46D] font-semibold mb-4">
               역사·제도·문화 리포트
-            </h5>
+            </p>
             <ul className="space-y-2 text-xs text-stone-400">
               <li>
-                <button
-                  onClick={() => onNavigate('/journal/bada-story-regulatory-anatomy')}
+                <a
+                  href="/journal/bada-story-regulatory-anatomy"
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      e.preventDefault();
+                      onNavigate('/journal/bada-story-regulatory-anatomy');
+                    }
+                  }}
                   className="hover:text-white transition-colors text-left"
                 >
                   2006 바다이야기 사태의 제도적 해부
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('/journal/arcade-culture-retrospective')}
+                <a
+                  href="/journal/arcade-culture-retrospective"
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      e.preventDefault();
+                      onNavigate('/journal/arcade-culture-retrospective');
+                    }
+                  }}
                   className="hover:text-white transition-colors text-left"
                 >
                   1990~2000년대 오락실 공간의 전이
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('/journal/safety-fact-check-guide')}
+                <a
+                  href="/journal/safety-fact-check-guide"
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      e.preventDefault();
+                      onNavigate('/journal/safety-fact-check-guide');
+                    }
+                  }}
                   className="hover:text-white transition-colors text-left"
                 >
                   온라인 사설 릴게임 3대 사기 수법
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('/comparator')}
+                <a
+                  href="/comparator"
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      e.preventDefault();
+                      onNavigate('/comparator');
+                    }
+                  }}
                   className="hover:text-white transition-colors text-left"
                 >
                   기종별 기술 스펙 비교기
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('/archive')}
+                <a
+                  href="/archive"
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      e.preventDefault();
+                      onNavigate('/archive');
+                    }
+                  }}
                   className="hover:text-white transition-colors text-left"
                 >
                   오락실 추억 아카이브
-                </button>
+                </a>
               </li>
             </ul>
           </div>
 
           {/* Column 4: Technical SEO & Verification */}
           <div>
-            <h5 className="text-xs uppercase tracking-widest text-[#C5A46D] font-semibold mb-4">
+            <p className="text-xs uppercase tracking-widest text-[#C5A46D] font-semibold mb-4">
               기술 구조 & 검증 도구
-            </h5>
+            </p>
             <ul className="space-y-2 text-xs text-stone-400">
               <li>
-                <button
-                  onClick={() => onNavigate('/about')}
+                <a
+                  href="/about"
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      e.preventDefault();
+                      onNavigate('/about');
+                    }
+                  }}
                   className="hover:text-white transition-colors text-left"
                 >
                   SAFE TEAM 편집 원칙 및 저널리즘 강령
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  onClick={() => onNavigate('/audit')}
+                <a
+                  href="/audit"
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      e.preventDefault();
+                      onNavigate('/audit');
+                    }
+                  }}
                   className="hover:text-white transition-colors text-left"
                 >
                   301 영구 이전 & 캐노니컬 감사표
-                </button>
+                </a>
               </li>
               <li>
                 <a

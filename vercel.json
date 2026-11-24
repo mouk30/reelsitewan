@@ -1,6 +1,6 @@
 {
   "framework": "vite",
-  "buildCommand": "vite build",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
     {
@@ -12,9 +12,74 @@
       "source": "/pgi/:path*",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/bada.html",
+      "destination": "/games/bada-story",
+      "permanent": true
+    },
+    {
+      "source": "/yamato/",
+      "destination": "/games/yamato",
+      "permanent": true
+    },
+    {
+      "source": "/sonogong.php",
+      "destination": "/games/sonogong",
+      "permanent": true
+    },
+    {
+      "source": "/ocean/",
+      "destination": "/games/ocean-paradise",
+      "permanent": true
+    },
+    {
+      "source": "/goldcastle.html",
+      "destination": "/games/golden-castle",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/sitemap.xml/",
+      "destination": "/sitemap.xml"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

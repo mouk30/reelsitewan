@@ -1,4 +1,4 @@
-import { NOSTALGIA_DATA_URI, SEAL_DATA_URI } from './fallbackImages';
+import { NOSTALGIA_DATA_URI, SEAL_DATA_URI } from './fallbackImages.ts';
 
 export interface GameDossier {
   id: string;
@@ -45,6 +45,7 @@ export interface GameDossier {
   volatilityLevel: string;
   featureTags: string[];
   externalUrl: string;
+  dateModified: string;
 }
 
 export interface EditorialArticle {
@@ -150,6 +151,7 @@ export const CORE_GAMES: GameDossier[] = [
     volatilityLevel: '높음',
     featureTags: ['잠수함 3단 사이렌 경보', '황금고래 출현 확정 잭팟'],
     externalUrl: 'http://rgb285.com/',
+    dateModified: '2026-11-19',
   },
   {
     id: 'yamato',
@@ -196,6 +198,7 @@ export const CORE_GAMES: GameDossier[] = [
     volatilityLevel: '초고변동',
     featureTags: ['파동포 300만 스페셜 자연빵', '거대 야마토 와일드 연타'],
     externalUrl: 'https://rg-53.com/',
+    dateModified: '2026-11-19',
   },
   {
     id: 'sonogong',
@@ -241,6 +244,7 @@ export const CORE_GAMES: GameDossier[] = [
     volatilityLevel: '높음',
     featureTags: ['플랫사다리 & 블록형 3D 탑재', '다채로운 5종 미니 보너스'],
     externalUrl: 'http://rgb285.com/',
+    dateModified: '2026-11-19',
   },
   {
     id: 'ocean-paradise',
@@ -285,6 +289,7 @@ export const CORE_GAMES: GameDossier[] = [
     volatilityLevel: '보통',
     featureTags: ['돌비 서라운드 음향 탑재', '산호초 와일드 프리 스핀'],
     externalUrl: 'https://www.kty76.com/',
+    dateModified: '2026-11-19',
   },
   {
     id: 'golden-castle',
@@ -330,6 +335,7 @@ export const CORE_GAMES: GameDossier[] = [
     volatilityLevel: '초고변동',
     featureTags: ['황금열쇠 3단 점등 보너스', '최고 50연타 잭팟 구간'],
     externalUrl: 'https://rg-53.com/',
+    dateModified: '2026-11-19',
   },
   {
     id: 'davinci',
@@ -374,6 +380,7 @@ export const CORE_GAMES: GameDossier[] = [
     volatilityLevel: '초고변동',
     featureTags: ['국내 최대 14종 기종 풀패키지 통합', '비트루비우스 황금비 잭팟'],
     externalUrl: 'https://www.kty76.com/',
+    dateModified: '2026-11-19',
   },
 ];
 

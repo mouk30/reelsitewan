@@ -74,9 +74,9 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({ slug, onNa
 
       {/* Table of Contents */}
       <nav aria-label="목차" className="bg-[#F7F5F0] rounded-xl p-5 border border-[#E2DFD9]">
-        <h3 className="text-xs font-bold text-[#101B2A] uppercase tracking-wider mb-2.5">
+        <h2 className="text-xs font-bold text-[#101B2A] uppercase tracking-wider mb-2.5">
           본문 목차 (Table of Contents)
-        </h3>
+        </h2>
         <ul className="space-y-1.5 text-xs text-[#737780]">
           {article.sections.map((sec, i) => (
             <li key={i}>
@@ -140,9 +140,9 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({ slug, onNa
 
       {/* Sources & Citations */}
       <section className="bg-white rounded-xl p-6 border border-[#E2DFD9] space-y-3">
-        <h3 className="font-serif text-base font-bold text-[#101B2A]">
+        <h2 className="font-serif text-base font-bold text-[#101B2A]">
           인용 문헌 및 사료 출처 (References & Citations)
-        </h3>
+        </h2>
         <ul className="space-y-1.5 text-xs text-[#737780]">
           {article.sources.map((src: any, i) => (
             <li key={i} className="flex items-center gap-2">

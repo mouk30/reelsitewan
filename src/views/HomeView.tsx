@@ -365,14 +365,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
                     </span>
                     <span className="text-[#737780]">{article.readTime}</span>
                   </div>
-                  <h4 className="font-serif text-lg sm:text-xl font-bold text-[#101B2A] group-hover:text-[#C5A46D] transition-colors leading-snug">
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-[#101B2A] group-hover:text-[#C5A46D] transition-colors leading-snug">
                     <button
                       onClick={() => onNavigate(`/journal/${article.slug}`)}
                       className="text-left"
                     >
                       {article.title}
                     </button>
-                  </h4>
+                  </h3>
                   <p className="text-xs text-[#737780] line-clamp-2 leading-relaxed">
                     {article.subtitle}
                   </p>

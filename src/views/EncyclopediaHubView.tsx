@@ -70,7 +70,7 @@ export const EncyclopediaHubView: React.FC<EncyclopediaHubViewProps> = ({ onNavi
                 : 'bg-white text-[#737780] hover:text-[#101B2A] border border-[#E2DFD9]'
             }`}
           >
-            전체 7대 기종 ({CORE_GAMES.length})
+            전체 {CORE_GAMES.length}대 기종 ({CORE_GAMES.length})
           </button>
           <button
             onClick={() => setFilter('video')}

@@ -189,13 +189,14 @@ Sitemap: /sitemap.xml`}
             </a>
           </div>
           <p className="text-xs text-[#737780] leading-relaxed">
-            7대 대표 기종 및 학술 리포트의 실제 존재하는 정규 Canonical URL만을 선별하여 ISO 8601 lastmod와 함께 제공합니다.
+            6대 대표 기종 및 학술 리포트의 실제 존재하는 정규 Canonical URL과 대표 이미지를 ISO 8601 lastmod와 함께 제공합니다.
           </p>
           <pre className="bg-[#101B2A] text-stone-300 p-3 rounded text-[11px] font-mono overflow-x-auto">
-{`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>/games/bada-story</loc>
-    <lastmod>2026-10-17</lastmod>
+    <loc>https://alliancegem.co.kr/games/bada-story</loc>
+    <lastmod>2026-11-19</lastmod>
   </url>
 </urlset>`}
           </pre>

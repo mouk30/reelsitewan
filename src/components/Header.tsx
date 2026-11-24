@@ -31,8 +31,14 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
         <div className="flex items-center justify-between h-20 gap-8">
           {/* Zone 1: Brand Wordmark (Display Serif + Clean Subtext) */}
           <div className="flex items-center shrink-0">
-            <button
-              onClick={() => handleLinkClick('/')}
+            <a
+              href="/"
+              onClick={(e) => {
+                if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                  e.preventDefault();
+                  handleLinkClick('/');
+                }
+              }}
               className="group flex items-center gap-3 text-left focus:outline-none"
               aria-label="SAFE TEAM 홈으로 이동"
             >
@@ -50,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
                   릴게임 안전지대 · 디지털 아카이브
                 </span>
               </div>
-            </button>
+            </a>
           </div>
 
           {/* Zone 2: Primary Nav Links (Single-Line, 4-5 items, clean hover underline) */}
@@ -60,9 +66,15 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
                 currentPath === link.path ||
                 (link.path !== '/' && currentPath.startsWith(link.path));
               return (
-                <button
+                <a
                   key={link.path}
-                  onClick={() => handleLinkClick(link.path)}
+                  href={link.path}
+                  onClick={(e) => {
+                    if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                      e.preventDefault();
+                      handleLinkClick(link.path);
+                    }
+                  }}
                   className={`relative py-1 whitespace-nowrap transition-colors hover:text-[#C5A46D] ${
                     isActive ? 'text-[#101B2A] font-semibold' : 'text-[#737780]'
                   }`}
@@ -71,7 +83,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate, onOpenS
                   {isActive && (
                     <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C5A46D]" />
                   )}
-                </button>
+                </a>
               );
             })}
           </nav>
